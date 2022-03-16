@@ -25,3 +25,23 @@ test('Should home render', () => {
   const homeElement = screen.getByTestId('html-element')
   expect(homeElement).toBeInTheDocument()
 });
+
+test('home render', () => {
+  render(
+  <Provider store={store}>
+  <Home />
+  </Provider>
+  );
+  const homeElement = screen.getByPlaceholderText('Enter Asteroid ID')
+  expect(homeElement).toBeInTheDocument()
+});
+
+test('render home', () => {
+  render(
+  <Provider store={store}>
+  <Home />
+  </Provider>
+  );
+  const homeElement = screen.getByText('Random Asteroid')
+  expect(homeElement).toBeInTheDocument()
+});
