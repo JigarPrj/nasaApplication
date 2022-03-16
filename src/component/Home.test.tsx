@@ -1,12 +1,27 @@
 import React from 'react';
 import { getByTestId, render, screen } from '@testing-library/react';
+import { Provider } from "react-redux";
 import Home from './Home';
+import thunk from "redux-thunk";
+import promise from "redux-promise-middleware";
+import { createStore, applyMiddleware, compose } from "redux";
+import combineReducers from "../reducers/reducer";
 
-test('renders learn react link', () => {
-  render(<Home />);
-  
-  expect(
-    // eslint-disable-next-line testing-library/prefer-screen-queries
-    getByTestId(document.documentElement, 'html-element'),
-  ).toBeInTheDocument()
+//@ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__|| compose;
+const middleware = [thunk, promise];
+
+const store = createStore(
+  combineReducers(),
+  composeEnhancers(applyMiddleware(...middleware))
+);
+
+test('Should home render', () => {
+  render(
+  <Provider store={store}>
+  <Home />
+  </Provider>
+  );
+  const homeElement = screen.getByTestId('html-element')
+  expect(homeElement).toBeInTheDocument()
 });
